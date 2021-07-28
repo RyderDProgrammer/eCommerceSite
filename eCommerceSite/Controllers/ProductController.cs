@@ -31,5 +31,31 @@ namespace eCommerceSite.Controllers
             //Send list of products to view to be displayed
             return View(products);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(Product p)
+        {
+            if (ModelState.IsValid)
+            {
+                //Add to the database
+                _context.Products.Add(p);
+                //Make sure it saves what its done.
+                _context.SaveChanges();
+
+                TempData["Message"] = $"{p.ProductId}:{p.Title} was added successfully!";
+
+                //redirect back to catalog page.
+                return RedirectToAction("Index");
+            }
+
+
+            return View();
+        }
     }
 }
