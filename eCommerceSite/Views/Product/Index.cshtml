@@ -4,9 +4,15 @@
 }
 
 <h1>Product Catalog</h1>
-<p>
-    @TempData["Message"]
-</p>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 <a asp-action="Add">Add Product</a>
 
 <div class="table-responsive">
@@ -20,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(Product p in Model)
+            @foreach (Product p in Model)
             {
                 <tr>
                     <td>@p.Title</td>
