@@ -25,6 +25,13 @@ namespace eCommerceSite.Controllers
         {
             int pageNum = id ?? 1;
             const int pageSize = 3;
+            ViewData["CurrentPage"] = pageNum;
+
+            int numProducts = await(from p in _context.Products select p).CountAsync();
+
+            int totalPages = (int)Math.Ceiling((double)numProducts / pageSize);
+
+            ViewData["MaxPage"] = totalPages;
 
             //Get all products from database
             //List<Product> products = _context.Products.ToList();
