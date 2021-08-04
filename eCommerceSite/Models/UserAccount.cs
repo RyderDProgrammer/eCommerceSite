@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,18 +21,28 @@ namespace eCommerceSite.Models
         public DateTime? DateOfBirth { get; set; }
     }
 
+    [Keyless]
     public class RegisterViewModel
     {
         [Required]
+        [EmailAddress]
+        [StringLength(200)]
         public string Email { get; set; }
 
-        [Required][Compare(nameof(Email))]
+        [Required]
+        [Compare(nameof(Email))]
+        [Display(Name = "Confirm Email")]
         public string ConfirmEmail { get; set; }
 
-        [Required][DataType(DataType.Password)]
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(120, MinimumLength = 6, ErrorMessage = "Password must be between {2} and {1}")]
         public string Password { get; set; }
 
-        [Required][DataType(DataType.Password)][Compare(nameof(Password))]
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password))]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
         [DataType(DataType.Date)]//Time is ignored
