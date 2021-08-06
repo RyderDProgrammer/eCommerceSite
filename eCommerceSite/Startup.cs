@@ -31,6 +31,12 @@ namespace eCommerceSite
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //Same as up above but instead of a lambda function its the actual function
             //services.AddDbContext<ProductContext>(AddSqlServer)
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
         }
 
         //private void AddSqlServer(DbContextOptionsBuilder options)
@@ -57,6 +63,9 @@ namespace eCommerceSite
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //Enables sessions
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
