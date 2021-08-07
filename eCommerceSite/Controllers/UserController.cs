@@ -1,5 +1,6 @@
 ﻿using eCommerceSite.Data;
 using eCommerceSite.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -48,6 +49,11 @@ namespace eCommerceSite.Controllers
 
         public IActionResult Login()
         {
+            //Check if user is already logged into website
+            if(HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -65,7 +71,7 @@ namespace eCommerceSite.Controllers
             /* 
             Another way of doing it in method syntax
             UserAccount account = 
-                _context.UserAccounts.Where(userAcc => userAcc.UserName == log.userNameOrEmail || userAcc.email == log.userNameOrEmail && userAcc.Password == log.Password
+                _context.UserAccounts.Where(userAcc => userAcc.UserName == log.userNameOrEmail || userAcc.email == log.userNameOrEmail && userAcc.Password == log.Password).SingleOrDefaultAsync();
             */
             if(acc == null)
             {
@@ -74,6 +80,7 @@ namespace eCommerceSite.Controllers
                 return View(log);
             }
             //Log user into website
+            HttpContext.Session.SetInt32("UserId",acc.UserId);
 
             return RedirectToAction("Index", "Home");
         }

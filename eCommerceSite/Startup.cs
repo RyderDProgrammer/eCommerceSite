@@ -65,6 +65,7 @@ namespace eCommerceSite
             app.UseAuthorization();
 
             //Enables sessions
+            //Just needs to be between UseRouting and UseEndpoints
             app.UseSession();
 
             app.UseEndpoints(endpoints =>
