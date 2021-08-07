@@ -1,6 +1,7 @@
 using eCommerceSite.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,10 @@ namespace eCommerceSite
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddHttpContextAccessor();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         //private void AddSqlServer(DbContextOptionsBuilder options)
