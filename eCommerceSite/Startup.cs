@@ -1,6 +1,7 @@
 using eCommerceSite.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,16 @@ namespace eCommerceSite
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //Same as up above but instead of a lambda function its the actual function
             //services.AddDbContext<ProductContext>(AddSqlServer)
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         //private void AddSqlServer(DbContextOptionsBuilder options)
@@ -57,6 +68,10 @@ namespace eCommerceSite
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //Enables sessions
+            //Just needs to be between UseRouting and UseEndpoints
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
