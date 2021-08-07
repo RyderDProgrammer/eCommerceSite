@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿
+@inject IHttpContextAccessor sessionData
+@{ 
+    int? userId = sessionData.HttpContext.Session.GetInt32("UserId");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,12 +33,19 @@
                         <li class="nav-item">
                             <span class="badge badge-pill badge-primary"><a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Product Catalog</a></span>
                         </li>
-                        <li class="nav-item">
+                        @if (userId == null) //If the user is not logged in
+                        {
+                            <li class="nav-item">
                             <span class="badge badge-pill badge-success"><a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register an Account</a></span>
                         </li>
-                        <li class="nav-item">
+                            <li class="nav-item">
                             <span class="badge badge-pill badge-success"><a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a></span>
                         </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark ">Welcome Back!</a></li>
+                        }
                     </ul>
                 </div>
             </div>
