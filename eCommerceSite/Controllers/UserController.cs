@@ -65,6 +65,8 @@ namespace eCommerceSite.Controllers
                 _context.UserAccounts.Add(acc);
                 await _context.SaveChangesAsync();
 
+                logUserIn(acc.UserId);
+
                 //redirect to home page
                 return RedirectToAction("Index", "Home");
             }
@@ -84,29 +86,34 @@ namespace eCommerceSite.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel log)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(log);
             }
             UserAccount acc =
                 await (from u in _context.UserAccounts
-                 where (u.UserName == log.UsernameOrEmail || u.Email == log.UsernameOrEmail) && u.Password == log.Password
-                 select u).SingleOrDefaultAsync();
+                       where (u.UserName == log.UsernameOrEmail || u.Email == log.UsernameOrEmail) && u.Password == log.Password
+                       select u).SingleOrDefaultAsync();
             /* 
             Another way of doing it in method syntax
             UserAccount account = 
                 _context.UserAccounts.Where(userAcc => userAcc.UserName == log.userNameOrEmail || userAcc.email == log.userNameOrEmail && userAcc.Password == log.Password).SingleOrDefaultAsync();
             */
-            if(acc == null)
+            if (acc == null)
             {
                 //Custom error message
                 ModelState.AddModelError(string.Empty, "Credentials were not found");
                 return View(log);
             }
-            //Log user into website
-            HttpContext.Session.SetInt32("UserId",acc.UserId);
+            logUserIn(acc.UserId);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void logUserIn(int accountId)
+        {
+            //Log user into website
+            HttpContext.Session.SetInt32("UserId", accountId);
         }
 
         public IActionResult Logout()
