@@ -52,16 +52,17 @@
                         </li>
                         @if (userId == null) //If the user is not logged in
                         {
-                            <li class="nav-item">
+                         <li class="nav-item">
                             <span class="badge badge-pill badge-success"><a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register an Account</a></span>
                         </li>
-                            <li class="nav-item">
+                         <li class="nav-item">
                             <span class="badge badge-pill badge-success"><a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a></span>
                         </li>
                         }
                         else
                         {
                             <li class="nav-item"><a class="nav-link text-dark ">Welcome @userName!</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-controller="User" asp-action="Logout">Logout</a></li>
                         }
                     </ul>
                 </div>
