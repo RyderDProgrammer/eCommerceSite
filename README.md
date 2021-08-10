@@ -18,7 +18,6 @@ This is an in-class project for the CPW 213 Summer course.
 [Microsoft Doc on EF](https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-3.1)
 
 ### NuGet Packages
-- If for some reason the NuGets didn't transfer properly or need to be updated we are using
 - [Microsoft.EntityFrameworkCore](https://docs.microsoft.com/en-us/ef/core/) Microsoft Docs
 - [Microsoft.EntityFrameworkCore.SqlServer](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/) NuGet site
 - [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools) NuGet site
