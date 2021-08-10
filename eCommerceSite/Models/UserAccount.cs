@@ -21,7 +21,6 @@ namespace eCommerceSite.Models
         public DateTime? DateOfBirth { get; set; }
     }
 
-    [Keyless]
     public class RegisterViewModel
     {
         [Required]
@@ -52,7 +51,6 @@ namespace eCommerceSite.Models
         public string Username { get; set; }
     }
 
-    [Keyless]
     public class LoginViewModel
     {
         [Required]
