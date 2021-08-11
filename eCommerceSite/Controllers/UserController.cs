@@ -53,6 +53,7 @@ namespace eCommerceSite.Controllers
                     return View(reg);
                 }
 
+
                 //Map data to user account instance/object
                 UserAccount acc = new UserAccount()
                 {
