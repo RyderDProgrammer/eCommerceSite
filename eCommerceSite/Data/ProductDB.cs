@@ -24,7 +24,7 @@ namespace eCommerceSite.Data
         /// <param name="_context">The database context</param>
         /// <param name="pageSize">Number of products per page</param>
         /// <param name="pageNum">Page of products to return</param>
-        public async static Task<List<Product>> getProductsAsync(ProductContext _context,int pageSize, int pageNum)
+        public async static Task<List<Product>> getAllProductsAsync(ProductContext _context,int pageSize, int pageNum)
         {
             return  await (from p in _context.Products
                     orderby p.Title ascending
@@ -37,6 +37,20 @@ namespace eCommerceSite.Data
             _context.Products.Add(p);
             //Make sure it saves what its done.
             await _context.SaveChangesAsync();
+            return p;
+        }
+
+        /// <summary>
+        /// Returns a single product where the ID matches the product being called in the database.
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <param name="prodId"></param>
+        /// <returns></returns>
+        public static async Task<Product> getProductAsync(ProductContext _context, int prodId)
+        {
+            Product p = await (from products in _context.Products
+                               where products.ProductId == prodId
+                               select products).SingleAsync();
             return p;
         }
     }
