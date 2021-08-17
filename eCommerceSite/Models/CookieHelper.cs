@@ -29,7 +29,7 @@ namespace eCommerceSite.Models
         }
 
         /// <summary>
-        /// 
+        /// Allows the user to add to the cart and makes use of getting the cart products above.
         /// </summary>
         /// <param name="p"></param>
         public static void addProductToCart(IHttpContextAccessor http, Product p)
@@ -50,12 +50,13 @@ namespace eCommerceSite.Models
         }
 
         /// <summary>
-        /// 
+        /// Just a simple number that displays the amount of items in the cart.
         /// </summary>
         /// <returns></returns>
         public static int getTotalCartProducts(IHttpContextAccessor http)
         {
-            return 0;
+            List<Product> cartProducts = getCartProducts(http);
+            return cartProducts.Count;
         }
     }
 }
