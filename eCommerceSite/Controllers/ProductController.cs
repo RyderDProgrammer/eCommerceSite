@@ -30,7 +30,7 @@ namespace eCommerceSite.Controllers
             int numProducts = await ProductDB.getTotalProductsAsync(_context);
             int totalPages = (int)Math.Ceiling((double)numProducts / pageSize);
             ViewData["MaxPage"] = totalPages;
-            List<Product> products = await ProductDB.getProductsAsync(_context, pageSize, pageNum);
+            List<Product> products = await ProductDB.getAllProductsAsync(_context, pageSize, pageNum);
 
 
 
@@ -62,17 +62,10 @@ namespace eCommerceSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            //Get product with corresponding id
             //Query syntax.
-             Product p =
-              await (from prod in _context.Products
-                    where prod.ProductId == id
-                    select prod).SingleAsync();
+            Product p = await ProductDB.getProductAsync(_context, id);
             //Method syntax
-            /*Product p2 =
-                await _context.Products.Where(prod => prod.ProductId == id).SingleAsync();*/
-
-            //pass product to view
+            //Product p2 = await _context.Products.Where(prod => prod.ProductId == id).SingleAsync();
             return View(p);
         }
 
@@ -92,11 +85,7 @@ namespace eCommerceSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            Product p =
-                await(from prod in _context.Products
-                      where prod.ProductId == id
-                      select prod).SingleAsync();
-
+            Product p = await ProductDB.getProductAsync(_context,id);
             return View(p);
         }
 
@@ -104,10 +93,7 @@ namespace eCommerceSite.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Product p =  await (from prod in _context.Products
-                         where prod.ProductId == id
-                         select prod).SingleAsync();
-
+            Product p = await ProductDB.getProductAsync(_context, id);
             _context.Entry(p).State = EntityState.Deleted;
             await _context.SaveChangesAsync();
 
